@@ -1,47 +1,30 @@
-# ベースイメージ
-FROM node:18-alpine AS base
+# syntax=docker/dockerfile:1.7
 
-# 依存関係のインストール用
-FROM base AS deps
-RUN apk add --no-cache libc6-compat
+# ---- build ----
+FROM node:20-alpine AS build
 WORKDIR /app
-
-# 依存関係ファイルをコピー
+ENV NEXT_TELEMETRY_DISABLED=1
 COPY package.json package-lock.json* ./
 RUN npm ci
-
-# ビルダー用
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
-# Next.jsテレメトリを無効化
-ENV NEXT_TELEMETRY_DISABLED=1
-
 RUN npm run build
 
-# ランナー用
-FROM base AS runner
+# ---- run ----
+FROM node:20-alpine AS run
 WORKDIR /app
 
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
+# 非root
+RUN addgroup -S nodejs -g 1001 && adduser -S nextjs -u 1001 -G nodejs
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-COPY --from=builder /app/public ./public
-
-# Standalone output を利用
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# 必要最小限のみコピー（standalone 推奨形）
+COPY --chown=nextjs:nodejs --from=build /app/public ./public
+COPY --chown=nextjs:nodejs --from=build /app/.next/standalone ./
+COPY --chown=nextjs:nodejs --from=build /app/.next/static ./.next/static
 
 USER nextjs
 
+# EXPOSE は任意（ドキュメント用途）
 EXPOSE 3000
 
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
-
+# 実行。PORT は compose 側で上書きされる
 CMD ["node", "server.js"]
