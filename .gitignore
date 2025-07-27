@@ -23,6 +23,18 @@
 # misc
 .DS_Store
 *.pem
+Thumbs.db
+
+# IDE files
+# .vscode/ - プロジェクト設定として含める（推奨拡張機能・フォーマット設定を共有）
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs
+*.log
 
 # debug
 npm-debug.log*
@@ -31,11 +43,11 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env*
+.env
 
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
+
