@@ -25,7 +25,9 @@ export default function Home() {
 
           <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow-md">
             <Zap className="mb-3 h-8 w-8 text-yellow-500" />
-            <span className="text-sm font-medium text-gray-700">TypeScript</span>
+            <span className="text-sm font-medium text-gray-700">
+              TypeScript
+            </span>
           </div>
 
           <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow-md">

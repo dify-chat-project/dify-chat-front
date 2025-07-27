@@ -23,8 +23,7 @@ COPY --chown=nextjs:nodejs --from=build /app/.next/static ./.next/static
 
 USER nextjs
 
-# EXPOSE は任意（ドキュメント用途）
+# EXPOSE は任意（ドキュメント用途）PORTは compose 側で上書きされる
 EXPOSE 3000
 
-# 実行。PORT は compose 側で上書きされる
 CMD ["node", "server.js"]

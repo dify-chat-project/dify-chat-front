@@ -7,6 +7,14 @@ build/
 # 依存関係
 node_modules/
 
+# パッケージロックファイル
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# 自動生成ファイル
+next-env.d.ts
+
 # ログファイル
 *.log
 
@@ -14,5 +22,8 @@ node_modules/
 .env*
 
 # その他
+tsconfig.json
 .DS_Store
 *.tsbuildinfo
+.vscode/settings.json
+docker-compose.yml
