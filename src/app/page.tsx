@@ -1,4 +1,5 @@
 import { Heart, Code, Coffee, Zap } from 'lucide-react'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -50,6 +51,21 @@ export default function Home() {
             <br />
             次はDocker環境を構築して、本格的な開発を始めましょう！
           </p>
+          <div className="mt-6 text-center">
+            <Link
+              href="/first-chat"
+              className="group inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-3 font-medium text-white shadow-md transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:scale-95"
+              aria-label="最初のチャットを開く"
+            >
+              最初のチャットを開く
+              <span
+                aria-hidden
+                className="transition-transform group-hover:translate-x-0.5"
+              >
+                →
+              </span>
+            </Link>
+          </div>
         </div>
       </div>
     </main>
