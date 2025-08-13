@@ -1,73 +1,181 @@
-import { Heart, Code, Coffee, Zap } from 'lucide-react'
-import Link from 'next/link'
+'use client'
 
-export default function Home() {
+import {
+    Chat as ChatIcon,
+    Code as CodeIcon,
+    Build as DockerIcon,
+    Palette as PaletteIcon,
+} from '@mui/icons-material'
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    Chip,
+    Container,
+    Grid,
+    Paper,
+    Stack,
+    Typography,
+    useTheme,
+} from '@mui/material'
+import { useState } from 'react'
+
+export default function HomePage() {
+  const theme = useTheme()
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+
+  const technologies = [
+    {
+      name: 'Next.js',
+      icon: <CodeIcon />,
+      color: theme.palette.primary.main,
+      description: 'React フレームワーク',
+    },
+    {
+      name: 'TypeScript',
+      icon: <CodeIcon />,
+      color: theme.palette.secondary.main,
+      description: '型安全な開発',
+    },
+    {
+      name: 'Material-UI',
+      icon: <PaletteIcon />,
+      color: theme.palette.success.main,
+      description: 'モダンなUIライブラリ',
+    },
+    {
+      name: 'Docker',
+      icon: <DockerIcon />,
+      color: theme.palette.info.main,
+      description: 'コンテナ化',
+    },
+  ]
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
-      <div className="max-w-4xl text-center">
-        <h1 className="mb-8 text-4xl font-bold text-gray-900 sm:text-6xl">
-          Welcome to{' '}
-          <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Dify Chat Front
-          </span>
-        </h1>
+    <Container maxWidth="lg" sx={{ py: 8 }}>
+      <Box
+        sx={{
+          textAlign: 'center',
+          mb: 8,
+        }}
+      >
+        <Typography
+          variant="h2"
+          component="h1"
+          gutterBottom
+          sx={{
+            fontWeight: 'bold',
+            background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            color: 'transparent',
+            mb: 3,
+          }}
+        >
+          Dify Chat Front
+        </Typography>
 
-        <p className="mb-12 text-xl text-gray-600">
-          Next.js + TypeScript + Tailwind CSS + Docker で構築された
-          <br />
-          モダンなチャットアプリケーション
-        </p>
+        <Typography variant="h5" color="text.secondary" sx={{ mb: 2 }}>
+          Next.js + TypeScript + Material-UI
+        </Typography>
 
-        <div className="mb-12 grid grid-cols-2 gap-6 sm:grid-cols-4">
-          <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow-md">
-            <Code className="mb-3 h-8 w-8 text-blue-500" />
-            <span className="text-sm font-medium text-gray-700">Next.js</span>
-          </div>
+        <Typography variant="body1" color="text.secondary">
+          モダンなチャットアプリケーションのフロントエンド
+        </Typography>
 
-          <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow-md">
-            <Zap className="mb-3 h-8 w-8 text-yellow-500" />
-            <span className="text-sm font-medium text-gray-700">
-              TypeScript
-            </span>
-          </div>
+        <Stack direction="row" spacing={1} justifyContent="center" sx={{ mt: 3 }}>
+          <Chip label="React 19" color="primary" variant="outlined" />
+          <Chip label="Next.js 15" color="primary" variant="outlined" />
+          <Chip label="MUI v7" color="secondary" variant="outlined" />
+          <Chip label="TypeScript" color="info" variant="outlined" />
+        </Stack>
+      </Box>
 
-          <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow-md">
-            <Heart className="mb-3 h-8 w-8 text-red-500" />
-            <span className="text-sm font-medium text-gray-700">Tailwind</span>
-          </div>
-
-          <div className="flex flex-col items-center rounded-lg bg-white p-6 shadow-md">
-            <Coffee className="mb-3 h-8 w-8 text-green-500" />
-            <span className="text-sm font-medium text-gray-700">Docker</span>
-          </div>
-        </div>
-
-        <div className="rounded-lg bg-white p-8 shadow-lg">
-          <h2 className="mb-4 text-2xl font-semibold text-gray-900">
-            🚀 セットアップ完了！
-          </h2>
-          <p className="text-gray-600">
-            すべての基本設定が完了しました。
-            <br />
-            次はDocker環境を構築して、本格的な開発を始めましょう！
-          </p>
-          <div className="mt-6 text-center">
-            <Link
-              href="/first-chat"
-              className="group inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-3 font-medium text-white shadow-md transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:scale-95"
-              aria-label="最初のチャットを開く"
+      <Grid container spacing={4} sx={{ mb: 8 }}>
+        {technologies.map((tech, index) => (
+          <Grid item xs={12} sm={6} md={3} key={tech.name}>
+            <Card
+              elevation={hoveredCard === index ? 8 : 2}
+              onMouseEnter={() => setHoveredCard(index)}
+              onMouseLeave={() => setHoveredCard(null)}
+              sx={{
+                height: '100%',
+                transition: 'all 0.3s ease-in-out',
+                transform: hoveredCard === index ? 'translateY(-8px)' : 'none',
+                cursor: 'pointer',
+              }}
             >
-              最初のチャットを開く
-              <span
-                aria-hidden
-                className="transition-transform group-hover:translate-x-0.5"
+              <CardContent
+                sx={{
+                  textAlign: 'center',
+                  p: 3,
+                }}
               >
-                →
-              </span>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </main>
+                <Box
+                  sx={{
+                    color: tech.color,
+                    mb: 2,
+                    '& svg': {
+                      fontSize: 48,
+                    },
+                  }}
+                >
+                  {tech.icon}
+                </Box>
+                <Typography variant="h6" gutterBottom>
+                  {tech.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {tech.description}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+
+      <Paper
+        elevation={3}
+        sx={{
+          p: 6,
+          textAlign: 'center',
+          background: `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${theme.palette.action.hover} 100%)`,
+        }}
+      >
+        <ChatIcon
+          sx={{
+            fontSize: 64,
+            color: theme.palette.primary.main,
+            mb: 3,
+          }}
+        />
+
+        <Typography variant="h4" gutterBottom>
+          🚀 セットアップ完了！
+        </Typography>
+
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+          MUIベースのクリーンなフロントエンド環境が整いました。
+          <br />
+          Docker環境と連携して、本格的なチャットアプリケーションの開発を始めましょう！
+        </Typography>
+
+        <Button
+          variant="contained"
+          size="large"
+          startIcon={<ChatIcon />}
+          sx={{
+            px: 4,
+            py: 2,
+            borderRadius: 2,
+            textTransform: 'none',
+            fontSize: '1.1rem',
+          }}
+        >
+          チャット機能を開発する
+        </Button>
+      </Paper>
+    </Container>
   )
 }
