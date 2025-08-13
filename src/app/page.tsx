@@ -1,24 +1,25 @@
 'use client'
 
 import {
-    Chat as ChatIcon,
-    Code as CodeIcon,
-    Build as DockerIcon,
-    Palette as PaletteIcon,
+  Chat as ChatIcon,
+  Code as CodeIcon,
+  Build as DockerIcon,
+  Palette as PaletteIcon,
 } from '@mui/icons-material'
 import {
-    Box,
-    Button,
-    Card,
-    CardContent,
-    Chip,
-    Container,
-    Grid,
-    Paper,
-    Stack,
-    Typography,
-    useTheme,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  Container,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
+  useTheme,
 } from '@mui/material'
+import Link from 'next/link'
 import { useState } from 'react'
 
 export default function HomePage() {
@@ -165,6 +166,8 @@ export default function HomePage() {
           variant="contained"
           size="large"
           startIcon={<ChatIcon />}
+          component={Link}
+          href="/chat"
           sx={{
             px: 4,
             py: 2,
@@ -173,7 +176,7 @@ export default function HomePage() {
             fontSize: '1.1rem',
           }}
         >
-          チャット機能を開発する
+          チャットを開始する
         </Button>
       </Paper>
     </Container>
